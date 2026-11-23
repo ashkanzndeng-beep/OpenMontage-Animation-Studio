@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "openmontage/studio/episode_contract",
+  "title": "Animation Studio Episode Planning Contract",
+  "description": "Additional studio pre-generation locks. Does not prove rendered visual/audio quality.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "episode_id",
+    "fps",
+    "duration_seconds",
+    "aspect_ratio",
+    "scene_id",
+    "scene_revision",
+    "prop_layout_hash",
+    "characters",
+    "shots"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fps": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "duration_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "aspect_ratio": {
+      "enum": [
+        "9:16",
+        "16:9",
+        "1:1"
+      ]
+    },
+    "scene_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scene_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prop_layout_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "characters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "species",
+          "reference_id",
+          "voice_id",
+          "relative_height"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "species": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "voice_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relative_height": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      }
+    },
+    "shots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "start_frame",
+          "end_frame",
+          "scene_id",
+          "scene_revision",
+          "prop_layout_hash",
+          "camera",
+          "visible_characters",
+          "speaker_events"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_frame": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end_frame": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scene_id": {
+            "type": "string"
+          },
+          "scene_revision": {
+            "type": "string"
+          },
+          "prop_layout_hash": {
+            "type": "string"
+          },
+          "camera": {
+            "type": "object",
+            "required": [
+              "position",
+              "angle",
+              "movement",
+              "subject_orientation"
+            ],
+            "properties": {
+              "position": {
+                "type": "string",
+                "minLength": 1
+              },
+              "angle": {
+                "type": "string",
+                "minLength": 1
+              },
+              "movement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "subject_orientation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lens_mm": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          "visible_characters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "character_id",
+                "relative_height"
+              ],
+              "properties": {
+                "character_id": {
+                  "type": "string"
+                },
+                "relative_height": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              }
+            }
+          },
+          "speaker_events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "speaker_id",
+                "voice_id",
+                "start_frame",
+                "end_frame",
+                "mouth_animation_character_ids"
+              ],
+              "properties": {
+                "speaker_id": {
+                  "type": "string"
+                },
+                "voice_id": {
+                  "type": "string"
+                },
+                "start_frame": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end_frame": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "mouth_animation_character_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "uniqueItems": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
